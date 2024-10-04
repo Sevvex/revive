@@ -1,6 +1,8 @@
-RegisterNetEvent('esx_ambulancejob:revive')
-AddEventHandler('esx_ambulancejob:revive', function()
+RegisterNetEvent('revivePlayer')
+AddEventHandler('revivePlayer', function()
     local playerPed = GetPlayerPed(-1)
     SetEntityHealth(playerPed, 200)
-    TriggerEvent('esx:showNotification', 'Du wurdest revived!')
+    TriggerEvent('chat:addMessage', {
+        args = { 'Du wurdest revived!' }
+    })
 end)
