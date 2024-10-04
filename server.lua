@@ -1,7 +1,17 @@
 
+local allowedGroups = {
+    ['admin'] = true,
+    ['superadmin'] = true,
+    ['projektleiter'] = true,
+    ['manager'] = true,
+    ['supporter'] = true,
+    ['moderator'] = true
+}
+
+
 local function isAdminOrHigher(playerId)
     local playerGroup = GetPlayerGroup(playerId)
-    return playerGroup == 'admin' or playerGroup == 'superadmin' or playerGroup == 'projektleiter' or playerGroup == 'manager' or playerGroup == 'supporter' or playerGroup == 'moderator'
+    return allowedGroups[playerGroup] or false
 end
 
 
@@ -9,7 +19,7 @@ RegisterCommand('revive', function(source, args)
     local targetId = tonumber(args[1])
     if isAdminOrHigher(source) then
         if targetId and GetPlayerName(targetId) then
-            TriggerClientEvent('esx_ambulancejob:revive', targetId) 
+            TriggerClientEvent('revivePlayer', targetId)
             print('Befehl /revive von ' .. GetPlayerName(source) .. ' für Spieler-ID ' .. targetId)
         else
             print('Ungültige Spieler-ID oder Spieler ist nicht online.')
@@ -23,7 +33,7 @@ end, false)
 RegisterCommand('reviveall', function(source)
     if isAdminOrHigher(source) then
         for _, playerId in ipairs(GetPlayers()) do
-            TriggerClientEvent('esx_ambulancejob:revive', playerId)
+            TriggerClientEvent('revivePlayer', playerId)
         end
         print('Alle Spieler wurden revived von ' .. GetPlayerName(source))
     else
