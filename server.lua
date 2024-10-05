@@ -1,4 +1,3 @@
-
 local allowedGroups = {
     ['admin'] = true,
     ['superadmin'] = true,
@@ -8,6 +7,10 @@ local allowedGroups = {
     ['moderator'] = true
 }
 
+local function GetPlayerGroup(playerId)
+    local xPlayer = ESX.GetPlayerFromId(playerId)
+    return xPlayer.getGroup() 
+end
 
 local function isAdminOrHigher(playerId)
     local playerGroup = GetPlayerGroup(playerId)
