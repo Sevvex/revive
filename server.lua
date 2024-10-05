@@ -7,9 +7,13 @@ local allowedGroups = {
     ['moderator'] = true
 }
 
+local ESX = nil
+
+TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+
 local function GetPlayerGroup(playerId)
     local xPlayer = ESX.GetPlayerFromId(playerId)
-    return xPlayer.getGroup() 
+    return xPlayer.getGroup()
 end
 
 local function isAdminOrHigher(playerId)
